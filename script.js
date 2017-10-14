@@ -1,21 +1,56 @@
 "use strict"
 // SVG
 var h, w, svgw, svgh, svg, 
-	svgNode, mobile, container;
-const RATIO = .65;
+	svgNode, mobile, container, RATIO;
+
+var liveColor = "#212121";
+var deadColor = "#fff";
 
 // BOARD
 var board = [], dim;
-const gap = 0;
-const COLS = 30;
-const ROWS = parseInt(COLS * RATIO);
+const gap = -1;
+var duration = 300;
+var playing = false;
+var COLS, ROWS, generation, t;
  
-var btn = document.getElementById("btn");
+var play = document.getElementById("play");
+var reset = document.getElementById("reset");
+var shuffle = document.getElementById("shuffle");
+var fb = document.getElementById("fb");
+var ff = document.getElementById("ff");
+
+play.onclick = () => {
+	play.className = playing? "icon-play" : "icon-pause";
+	playing = !playing;
+	if(playing) {
+		playing = true;
+		tick();
+	}
+}
+
+reset.onclick = () => { reset(true) }
+
+shuffle.onclick = () => { reset(false) }
+
+var reset = (empty) => {
+	play.className = "icon-play";
+	playing = false;
+	if(empty) {
+		clearBoard();
+	} else {
+		clearBoard();
+		initBoard();
+		initDraw();	
+		tick();
+	}
+}
+
+
+
 var init = () => {
-	initBoard();
 	initSVG();
+	initBoard();
 	initDraw();
-	btn.onclick = tick;
 }
 
 window.onresize = initSVG;
@@ -23,26 +58,25 @@ var initSVG = () => {
 	h = window.innerHeight;
 	w = window.innerWidth;
 	mobile = h > w;
-	if( mobile ) {
-		svgh = RATIO * h;
-		svgw = RATIO * svgh;
-	} else {
-		svgw = RATIO * w;
-		svgh = svgw * RATIO;
-	}
+	RATIO = mobile ? .55 : .45;
+	COLS = mobile ? 30 : 70;
+	ROWS = parseInt(COLS * RATIO);
+	svgw = mobile ? RATIO * w * 2.5 :  w;
+	dim = svgw / COLS;
+	svgh = mobile ? (svgw * RATIO): ROWS * dim;
 	if( !svg ) {
 		svg = d3.select("#container")
 				.append("svg")
-				.attr("class", "svg")
+				.attr("class", () => mobile ? "svg mobile" : "svg")
 		container = d3.select("#container")
 					.on("click", handleClick);	
 	}
 	svg.attr("width", svgw)
 		.attr("height", svgh);
-	dim = svgw / COLS;
 }
 
 var initBoard = () => {
+	generation = 0;
 	for(var i = 0; i < COLS * ROWS; i++) {
 		if(isEdge(i)) {
 			board[i] = 0;
@@ -51,6 +85,13 @@ var initBoard = () => {
 			board[i] = Math.round( Math.random() - .2);
 		}
 	}
+}
+
+var clearBoard = () => {
+	generation = 0;
+	board = board.map(el => el * 0);
+	svg.selectAll("rect")
+		.attr("fill", deadColor);
 }
 
 var handleClick = () => {
@@ -66,6 +107,7 @@ var handleClick = () => {
 var initDraw = () => {
 	svg.selectAll("g")
 		.data( board )
+		.attr("fill", d => d? liveColor : deadColor)
 		.enter()
 			.append("g")
 			.attr("transform", 
@@ -79,7 +121,7 @@ var initDraw = () => {
 			.attr("id", (d, i) => "c" + i)
 			.attr("width", dim - gap)
 			.attr("height", dim - gap)
-			.attr("fill", d => d? "#fff" : "#333");
+			.attr("fill", d => d? liveColor : deadColor);
 }
 
 var tick = () => {
@@ -92,13 +134,19 @@ var tick = () => {
 	for(var i = 0; i < changing.length; i++) {
 		toggleCell(changing[i]);
 	}
-	window.setTimeout(tick, 50);
+
+	if(changing.length != 0 && playing) {
+		t = window.setTimeout(tick, duration)
+	} else {
+		window.clearTimeout(t);
+	}
 }
+
 
 var toggleCell = (id) => {
 	board[id] = !board[id];
 	svg.select(`#c${id}`)
-		.attr("fill", () => board[id] ? "#fff" : "#333");
+		.attr("fill", () => board[id] ? liveColor : deadColor);
 }
 
 var isChanging = (id) => {

@@ -1,11 +1,30 @@
+@import "./icons/css/rc.css";
+
 body {
-	background-color: #f55;
+	background-color: #fff;
 }
 
 .svg {
 	margin: auto;
-	top: 0; right: 0;
-	bottom: 0; left: 0;
+	top; right: 0;
+	 left: 0;
 	position: absolute;
 	border-radius: 5px;
+}
+
+.mobile {
+	transform: rotate(90deg);
+	left: -20%;
+}
+
+.controls {
+	z-index: 100;
+	background-color: "#fff";
+	position: absolute;
+	text-align: center;
+	width: 250px;
+	height: 50px;
+	bottom: 20px; right: 0;
+	left: 0;
+	margin: auto;
 }
