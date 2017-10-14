@@ -25,28 +25,34 @@
       "src": "entypo"
     },
     {
-      "uid": "c77fd2fd065b5fe16d6f2b41e190b266",
-      "css": "pencil",
-      "code": 59403,
-      "src": "entypo"
-    },
-    {
-      "uid": "37c5ab63f10d7ad0b84d0978dcd0c7a8",
-      "css": "shuffle",
-      "code": 59393,
-      "src": "fontawesome"
-    },
-    {
       "uid": "cb13afd4722a849d48056540bb74c47e",
       "css": "play",
       "code": 59396,
       "src": "entypo"
     },
     {
-      "uid": "1b5a5d7b7e3c71437f5a26befdd045ed",
-      "css": "doc",
-      "code": 59394,
+      "uid": "39c4d0e225a1263a398a47523cb5b9bd",
+      "css": "brush",
+      "code": 59398,
+      "src": "entypo"
+    },
+    {
+      "uid": "2626e3a1bbcd90e45849af3b58a1d594",
+      "css": "trash",
+      "code": 59392,
+      "src": "entypo"
+    },
+    {
+      "uid": "ff70f7b3228702e0d590e60ed3b90bea",
+      "css": "magic",
+      "code": 61648,
       "src": "fontawesome"
+    },
+    {
+      "uid": "24aba8757d4a7b49568c98a577a85df3",
+      "css": "cancel-outline",
+      "code": 59394,
+      "src": "typicons"
     }
   ]
 }

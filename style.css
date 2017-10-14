@@ -26,7 +26,7 @@ body {
 	background-color: "#fff";
 	position: absolute;
 	text-align: center;
-	width: 250px;
+	width: 450px;
 	height: 50px;
 	bottom: 20px; right: 0;
 	left: 0;
@@ -34,20 +34,29 @@ body {
 }
 
 .display {
-	margin: 10px;
+	margin-top: 20px;
 	cursor: default;
 }
 
-#gen {
+/*#gen {
 	float: left;
 }
 
 #speed {
 	float: right;
-}
+}*/
 
 i {
 	cursor: pointer;
+	padding: 10px;
+	border-radius: 3px;
+	/*border: 2px solid rgba(0,0,0,.5);*/
+	transition: .1s;
+}
+
+i:hover {
+	background-color: #000;
+	color: white;
 }
 
 rect:hover {

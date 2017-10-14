@@ -11,6 +11,7 @@ var board = [], dim;
 const gap = -1;
 var duration = 200;
 var playing = false;
+var clicked = false;
 var COLS, ROWS, generation, t;
  
 var play = document.getElementById("play");
@@ -87,7 +88,10 @@ var initSVG = () => {
 				.append("svg")
 				.attr("class", () => mobile ? "svg mobile" : "svg")
 		container = d3.select("#container")
-					.on("click", handleClick);	
+					.on("mousedown", handleMouseDown)
+					.on("mousemove", handleMouseMove)	
+					.on("mouseup", handleMouseUp)
+					.on("click", handleClick)
 	}
 	svg.attr("width", svgw)
 		.attr("height", svgh);
@@ -118,9 +122,21 @@ var handleClick = () => {
 	var x = Math.floor(pos[0] / dim);
 	var y = Math.floor(pos[1] / dim);
 	var id = x + y * COLS;
-	// var alive = board[id];
-	//board[id] = alive ? 0 : 1;
-	//update(id, !alive);
+	toggleCell(id);
+}
+
+var handleMouseDown = () => {
+	clicked = true;
+}
+
+var handleMouseMove = () => {
+	if(clicked) {
+		handleClick();
+	}
+}
+
+var handleMouseUp = () => {
+	clicked = false;
 }
 
 var initDraw = () => {
