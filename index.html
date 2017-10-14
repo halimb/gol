@@ -11,12 +11,16 @@
 
     <body>
     	<div class="controls">
-	    	<i id="fb" class="icon-fast-backward"></i>
-	    	<i id="play" class="icon-play"></i>
-	    	<i id="ff" class="icon-fast-forward"></i>
+	    	<i id="fb" title="slow down" class="icon-fast-backward"></i>
+	    	<i id="play" title="play"  class="icon-play"></i>
+	    	<i id="ff" title="increase speed" class="icon-fast-forward"></i>
 	    	&nbsp;&nbsp;&nbsp;
-	    	<i id="reset" class="icon-arrows-cw-1"></i>
-	    	<i id="shuffle" class="icon-shuffle"></i>
+	    	<i id="shuffle" title="random population" class="icon-shuffle"></i>
+	    	<i id="reset" title="clear" class="icon-doc"></i>
+    		<div id="display" class="display"> 
+    			<span id="gen">Generation: 0</span>
+    			<span id="speed">Speed: 1x</span>
+    		</div>
 	    </div>
     	<div id="container" class="board"></div>
     	<script src="D3.js"></script>

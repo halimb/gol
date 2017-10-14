@@ -31,12 +31,6 @@
       "src": "entypo"
     },
     {
-      "uid": "a73c5deb486c8d66249811642e5d719a",
-      "css": "arrows-cw-1",
-      "code": 59392,
-      "src": "fontawesome"
-    },
-    {
       "uid": "37c5ab63f10d7ad0b84d0978dcd0c7a8",
       "css": "shuffle",
       "code": 59393,
@@ -47,6 +41,12 @@
       "css": "play",
       "code": 59396,
       "src": "entypo"
+    },
+    {
+      "uid": "1b5a5d7b7e3c71437f5a26befdd045ed",
+      "css": "doc",
+      "code": 59394,
+      "src": "fontawesome"
     }
   ]
 }

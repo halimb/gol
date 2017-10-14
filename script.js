@@ -9,7 +9,7 @@ var deadColor = "#fff";
 // BOARD
 var board = [], dim;
 const gap = -1;
-var duration = 300;
+var duration = 200;
 var playing = false;
 var COLS, ROWS, generation, t;
  
@@ -18,6 +18,8 @@ var reset = document.getElementById("reset");
 var shuffle = document.getElementById("shuffle");
 var fb = document.getElementById("fb");
 var ff = document.getElementById("ff");
+var gen = document.getElementById("gen");
+var speed = document.getElementById("speed");
 
 play.onclick = () => {
 	play.className = playing? "icon-play" : "icon-pause";
@@ -25,6 +27,20 @@ play.onclick = () => {
 	if(playing) {
 		playing = true;
 		tick();
+	}
+}
+
+ff.onclick = () => {
+	if( duration > 50 ) {
+		duration /= 2;
+		updateDuration();
+	}
+}
+
+fb.onclick = () => {
+	if( duration < 800 ) {
+		duration *= 2;
+		updateDuration();
 	}
 }
 
@@ -45,7 +61,9 @@ var reset = (empty) => {
 	}
 }
 
-
+var updateDuration = () => {
+	speed.innerHTML = `Speed: ${2 / (duration / 100)}x`
+}
 
 var init = () => {
 	initSVG();
@@ -89,6 +107,7 @@ var initBoard = () => {
 
 var clearBoard = () => {
 	generation = 0;
+	updateGen();
 	board = board.map(el => el * 0);
 	svg.selectAll("rect")
 		.attr("fill", deadColor);
@@ -135,11 +154,17 @@ var tick = () => {
 		toggleCell(changing[i]);
 	}
 
+	updateGen();
+
 	if(changing.length != 0 && playing) {
 		t = window.setTimeout(tick, duration)
 	} else {
 		window.clearTimeout(t);
 	}
+}
+
+var updateGen = () => {
+	gen.innerHTML = `Generation: ${generation++}`;
 }
 
 

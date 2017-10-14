@@ -1,11 +1,11 @@
 @font-face {
   font-family: 'rc';
-  src: url('../font/rc.eot?93986845');
-  src: url('../font/rc.eot?93986845#iefix') format('embedded-opentype'),
-       url('../font/rc.woff2?93986845') format('woff2'),
-       url('../font/rc.woff?93986845') format('woff'),
-       url('../font/rc.ttf?93986845') format('truetype'),
-       url('../font/rc.svg?93986845#rc') format('svg');
+  src: url('../font/rc.eot?39305411');
+  src: url('../font/rc.eot?39305411#iefix') format('embedded-opentype'),
+       url('../font/rc.woff2?39305411') format('woff2'),
+       url('../font/rc.woff?39305411') format('woff'),
+       url('../font/rc.ttf?39305411') format('truetype'),
+       url('../font/rc.svg?39305411#rc') format('svg');
   font-weight: normal;
   font-style: normal;
 }
@@ -15,7 +15,7 @@
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'rc';
-    src: url('../font/rc.svg?93986845#rc') format('svg');
+    src: url('../font/rc.svg?39305411#rc') format('svg');
   }
 }
 */
@@ -45,7 +45,7 @@
   margin-left: .2em;
  
   /* you can be more comfortable with increased icons size */
-   font-size: 180%; 
+  font-size: 200%;
  
   /* Font smoothing. That was taken from TWBS */
   -webkit-font-smoothing: antialiased;
@@ -54,16 +54,19 @@
   /* Uncomment for 3D effect */
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
 }
-.icon-arrows-cw-1 {
-  font-size: 80%;
-} 
-.icon-shuffle {
-  font-size: 80%;
-}
-.icon-arrows-cw-1:before { content: '\e800'; } /* '' */
+ 
 .icon-shuffle:before { content: '\e801'; } /* '' */
+.icon-doc:before { content: '\e802'; } /* '' */
 .icon-play:before { content: '\e804'; } /* '' */
 .icon-pause:before { content: '\e807'; } /* '' */
 .icon-fast-forward:before { content: '\e808'; } /* '' */
 .icon-fast-backward:before { content: '\e809'; } /* '' */
 .icon-pencil:before { content: '\e80b'; } /* '' */
+
+.icon-doc {
+  font-size: 80%;
+}
+
+.icon-shuffle {
+  font-size: 80%;
+}
