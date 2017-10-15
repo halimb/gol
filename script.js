@@ -22,6 +22,7 @@ var ff = document.getElementById("ff");
 var gen = document.getElementById("gen");
 var speed = document.getElementById("speed");
 
+
 play.onclick = () => {
 	play.className = playing? "icon-play" : "icon-pause";
 	playing = !playing;
@@ -51,54 +52,62 @@ shuffle.onclick = () => { reset(false) }
 
 var reset = (empty) => {
 	play.className = "icon-play";
-	playing = false;
 	if(empty) {
 		clearBoard();
 	} else {
+		playing = true;
 		clearBoard();
 		initBoard();
 		initDraw();	
 		tick();
 	}
+	playing = false;
 }
 
 var updateDuration = () => {
-	speed.innerHTML = `Speed: ${2 / (duration / 100)}x`
+	speed.innerHTML = `speed: ${2 / (duration / 100)}x`
 }
 
 var init = () => {
+	container = d3.select("#container")
+				.on("mousedown", handleMouseDown)
+				.on("mousemove", handleMouseMove)	
+				.on("mouseup", handleMouseUp)
+				.on("click", handleClick)
+
+
 	initSVG();
 	initBoard();
 	initDraw();
 }
 
-window.onresize = initSVG;
+window.onresize = () => {
+	d3.select("svg").remove();
+	initSVG();
+	initBoard();
+	initDraw();
+}
+
 var initSVG = () => {
 	h = window.innerHeight;
 	w = window.innerWidth;
 	mobile = h > w;
-	RATIO = mobile ? .55 : .45;
-	COLS = mobile ? 30 : 70;
-	ROWS = parseInt(COLS * RATIO);
-	svgw = mobile ? RATIO * w * 2.5 :  w;
-	dim = svgw / COLS;
-	svgh = mobile ? (svgw * RATIO): ROWS * dim;
-	if( !svg ) {
-		svg = d3.select("#container")
-				.append("svg")
+	dim =  mobile ? 15 : 10;
+	svgw = w;
+	svgh = h * .825;
+
+	COLS = parseInt( svgw / dim );
+	ROWS = parseInt( svgh / dim );
+
+	svg = container.append("svg")
 				.attr("class", () => mobile ? "svg mobile" : "svg")
-		container = d3.select("#container")
-					.on("mousedown", handleMouseDown)
-					.on("mousemove", handleMouseMove)	
-					.on("mouseup", handleMouseUp)
-					.on("click", handleClick)
-	}
-	svg.attr("width", svgw)
-		.attr("height", svgh);
+				.attr("width", svgw)
+				.attr("height", svgh);
 }
 
 var initBoard = () => {
 	generation = 0;
+	board = [];
 	for(var i = 0; i < COLS * ROWS; i++) {
 		if(isEdge(i)) {
 			board[i] = 0;
@@ -111,6 +120,7 @@ var initBoard = () => {
 
 var clearBoard = () => {
 	generation = 0;
+	window.clearTimeout(t)
 	updateGen();
 	board = board.map(el => el * 0);
 	svg.selectAll("rect")
@@ -160,27 +170,29 @@ var initDraw = () => {
 }
 
 var tick = () => {
-	var changing = []; 
-	for(var id = 0; id < board.length; id++) {
-		if(!isEdge(id) && isChanging(id)) {
-			changing.push(id);
+	if(playing) {
+		var changing = []; 
+		for(var id = 0; id < board.length; id++) {
+			if(!isEdge(id) && isChanging(id)) {
+				changing.push(id);
+			}
 		}
-	}
-	for(var i = 0; i < changing.length; i++) {
-		toggleCell(changing[i]);
-	}
+		for(var i = 0; i < changing.length; i++) {
+			toggleCell(changing[i]);
+		}
 
-	updateGen();
+		updateGen();
 
-	if(changing.length != 0 && playing) {
-		t = window.setTimeout(tick, duration)
-	} else {
-		window.clearTimeout(t);
+		if(changing.length != 0 && playing) {
+			t = window.setTimeout(tick, duration)
+		} else {
+			window.clearTimeout(t);
+		}
 	}
 }
 
 var updateGen = () => {
-	gen.innerHTML = `Generation: ${generation++}`;
+	gen.innerHTML = `generation: ${generation++}`;
 }
 
 

@@ -3,63 +3,96 @@
 body {
 	background-color: #fff;
 	user-select: none;
+	overflow: hidden;
 }
 
 .svg {
 	margin: auto;
-	top; right: 0;
+	top: 0; right: 0;
 	 left: 0;
 	position: absolute;
 	border-radius: 5px;
 	cursor: crosshair;
 }
-
+/*
 .mobile {
 	transform: rotate(90deg);
 	left: -20%;
-}
+}*/
 
 .controls {
-	font-family: arial;
-	font-weight: bold;
+	/*box-shadow: 0 0  20px 0px rgba(0,0,0,.3);*/
+	border-top: 1px dashed black;
+	border-radius: 5px;
+	font-family: courier;
+	/*font-weight: bold;*/
 	z-index: 100;
 	background-color: "#fff";
 	position: absolute;
 	text-align: center;
-	width: 450px;
+	left: 0; right: 0;
+	width: 100%;
 	height: 50px;
-	bottom: 20px; right: 0;
-	left: 0;
+	bottom: 5px;
+	padding: 20px 0;
 	margin: auto;
 }
 
 .display {
-	margin-top: 20px;
+	z-index: -1;
+	width: 100%;
+	font-size: 90%;
+	position: absolute;
+	/*top: 0;*/
+	margin: 15px;
 	cursor: default;
 }
 
-/*#gen {
+#gen {
 	float: left;
 }
 
 #speed {
 	float: right;
-}*/
+	margin-right: 30px;
+}
 
 i {
 	cursor: pointer;
-	padding: 10px;
+	padding: 5px;
 	border-radius: 3px;
+	font-size: 130%;
 	/*border: 2px solid rgba(0,0,0,.5);*/
 	transition: .1s;
 }
 
-i:hover {
-	background-color: #000;
-	color: white;
-}
+i:active {
+		background-color: #bd5;
+		color: #030;	
+		border-radius: 3px;
+	}
 
-rect:hover {
+rect:active {
 	cursor: crosshair;
 	fill: #afa;
+}
+
+@media screen and (min-width: 500px){
+	.controls {
+		height: 20px;
+	}
+
+	.display {
+		top: 10px;
+	}
+
+	i:hover {
+		background-color: #bd5;
+		color: #030;
+	}
+
+	rect:hover {
+		cursor: crosshair;
+		fill: #afa;
+	}
 }
