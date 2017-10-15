@@ -12,6 +12,7 @@ const gap = -1;
 var duration = 200;
 var playing = false;
 var clicked = false;
+var brushing = true;
 var COLS, ROWS, generation, t;
  
 var play = document.getElementById("play");
@@ -21,13 +22,15 @@ var fb = document.getElementById("fb");
 var ff = document.getElementById("ff");
 var gen = document.getElementById("gen");
 var speed = document.getElementById("speed");
+var brush = document.getElementById("brush");
+var erase = document.getElementById("erase");
 
+play.onclick = togglePlay;
 
-play.onclick = () => {
+function togglePlay() {
 	play.className = playing? "icon-play" : "icon-pause";
 	playing = !playing;
 	if(playing) {
-		playing = true;
 		tick();
 	}
 }
@@ -50,6 +53,22 @@ reset.onclick = () => { reset(true) }
 
 shuffle.onclick = () => { reset(false) }
 
+brush.onclick = () => {
+	if( ! brushing ) {
+		brushing = true;
+		erase.className = "icon-cancel-outline";
+		brush.className = "icon-brush selected";
+	}
+}
+
+erase.onclick = () => {
+	if( brushing ) {
+		brushing = false;
+		brush.className = "icon-brush";
+		erase.className = "icon-cancel-outline selected";
+	}
+}
+
 var reset = (empty) => {
 	play.className = "icon-play";
 	if(empty) {
@@ -71,8 +90,15 @@ var updateDuration = () => {
 var init = () => {
 	container = d3.select("#container")
 				.on("mousedown", handleMouseDown)
-				.on("mousemove", handleMouseMove)	
+				.on("touchstart", handleMouseDown)
+
+				.on("mousemove", handleMouseMove)
+				.on("touchmove", handleMouseMove)	
+				
+				.on("mouseleave", handleMouseUp)
+				.on("touchend", handleMouseUp)
 				.on("mouseup", handleMouseUp)
+
 				.on("click", handleClick)
 
 
@@ -94,7 +120,7 @@ var initSVG = () => {
 	mobile = h > w;
 	dim =  mobile ? 15 : 10;
 	svgw = w;
-	svgh = h * .825;
+	svgh = mobile ? h * .875 : h * .9;
 
 	COLS = parseInt( svgw / dim );
 	ROWS = parseInt( svgh / dim );
@@ -132,14 +158,14 @@ var handleClick = () => {
 	var x = Math.floor(pos[0] / dim);
 	var y = Math.floor(pos[1] / dim);
 	var id = x + y * COLS;
-	toggleCell(id);
+	toggleCell(id, true);
 }
 
 var handleMouseDown = () => {
 	clicked = true;
 }
 
-var handleMouseMove = () => {
+var handleMouseMove = (e) => {
 	if(clicked) {
 		handleClick();
 	}
@@ -187,6 +213,7 @@ var tick = () => {
 			t = window.setTimeout(tick, duration)
 		} else {
 			window.clearTimeout(t);
+			togglePlay();
 		}
 	}
 }
@@ -196,8 +223,8 @@ var updateGen = () => {
 }
 
 
-var toggleCell = (id) => {
-	board[id] = !board[id];
+var toggleCell = (id, click) => {
+	board[id] = click ? brushing : !board[id];
 	svg.select(`#c${id}`)
 		.attr("fill", () => board[id] ? liveColor : deadColor);
 }

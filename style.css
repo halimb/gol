@@ -36,6 +36,7 @@ body {
 	bottom: 5px;
 	padding: 20px 0;
 	margin: auto;
+	background-color: #fff;
 }
 
 .display {
@@ -58,23 +59,36 @@ body {
 }
 
 i {
+	background-color: #ccc;
 	cursor: pointer;
 	padding: 5px;
 	border-radius: 3px;
-	font-size: 130%;
-	/*border: 2px solid rgba(0,0,0,.5);*/
-	transition: .1s;
+	color: black;
+	font-size: 90%;
+}
+
+#brush {
+	background-color: #fff;
+}
+
+#erase {
+	background-color: #fff;
+}
+
+.selected {
+	border: 2px solid #bd5 !important;
+	/*box-shadow: 0 0  10px 3px rgba(70,200,40,1);*/
 }
 
 i:active {
-		background-color: #bd5;
-		color: #030;	
+		background-color: #000;
+		color: #fff;	
 		border-radius: 3px;
 	}
 
 rect:active {
 	cursor: crosshair;
-	fill: #afa;
+	fill: #bd5;
 }
 
 @media screen and (min-width: 500px){
@@ -87,12 +101,12 @@ rect:active {
 	}
 
 	i:hover {
-		background-color: #bd5;
-		color: #030;
+		background-color: #ddd;
+		color: black;
 	}
 
 	rect:hover {
 		cursor: crosshair;
-		fill: #afa;
+		fill: #bd5;
 	}
 }
