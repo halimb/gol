@@ -8,7 +8,7 @@ var deadColor = "#fff";
 
 // BOARD
 var board = [], dim;
-const gap = -1;
+const gap = 0;
 var duration = 200;
 var playing = false;
 var clicked = false;
@@ -88,7 +88,7 @@ var updateDuration = () => {
 }
 
 var init = () => {
-	container = d3.select("#container")
+	container = d3.selectAll("#container")
 				.on("mousedown", handleMouseDown)
 				.on("touchstart", handleMouseDown)
 
@@ -99,7 +99,7 @@ var init = () => {
 				.on("touchend", handleMouseUp)
 				.on("mouseup", handleMouseUp)
 
-				.on("click", handleClick)
+				.on("click", handleClick);
 
 
 	initSVG();
@@ -118,7 +118,7 @@ var initSVG = () => {
 	h = window.innerHeight;
 	w = window.innerWidth;
 	mobile = h > w;
-	dim =  mobile ? 15 : 10;
+	dim =  mobile ? 15 : 15;
 	svgw = w;
 	svgh = mobile ? h * .875 : h * .9;
 
@@ -129,7 +129,14 @@ var initSVG = () => {
 				.attr("class", () => mobile ? "svg mobile" : "svg")
 				.attr("width", svgw)
 				.attr("height", svgh);
+
 }
+
+function zoomed() {
+  svg
+      .translate(zoom.translate());
+}
+
 
 var initBoard = () => {
 	generation = 0;
@@ -192,7 +199,8 @@ var initDraw = () => {
 			.attr("id", (d, i) => "c" + i)
 			.attr("width", dim - gap)
 			.attr("height", dim - gap)
-			.attr("fill", d => d? liveColor : deadColor);
+			.attr("fill", d => d? liveColor : deadColor)
+			.attr("stroke", "rgba(0,0,0,.2)");
 }
 
 var tick = () => {
@@ -209,12 +217,7 @@ var tick = () => {
 
 		updateGen();
 
-		if(changing.length != 0 && playing) {
-			t = window.setTimeout(tick, duration)
-		} else {
-			window.clearTimeout(t);
-			togglePlay();
-		}
+		t = window.setTimeout(tick, duration);
 	}
 }
 

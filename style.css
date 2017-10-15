@@ -39,6 +39,10 @@ body {
 	background-color: #fff;
 }
 
+.zoomed {
+	zoom: 150%;
+}
+
 .display {
 	z-index: -1;
 	width: 100%;
